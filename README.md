@@ -13,8 +13,11 @@ Front end developer
 Our goal is to compare the number of positions available for each career type and their prominent locations. 
 
 We will be scraping the following pages:
+
 https://www.ziprecruiter.com/candidate/search?radius=100&search=data+scientist&location=irvine+CA
+
 https://www.ziprecruiter.com/candidate/search?radius=100&search=software+engineer&location=irvine+CA
+
 https://www.ziprecruiter.com/candidate/search?radius=100&search=front+end+developer&location=irvine+CA
 
 We will using Leaflet to create maps, heat maps and markers. 
