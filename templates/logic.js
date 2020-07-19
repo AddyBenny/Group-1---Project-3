@@ -1,62 +1,98 @@
 
-var url =  "https://api.mapbox.com/geocoding/v5/mapbox.places/"
-var url_end = ".json?access_token=" + API_KEY
+var url =  "http://localhost:4545/"
 
-var main_list = []
-
-function printName(main_list){
-d3.json("http://localhost:4545/").then(function(data){
-    //    console.log(data);
-    //     console.log(data[1].City)
-        // console.log(url + data[i].City + url_end)
-
-        
-        var full_url = url + data[1].City + url_end
-        d3.json(full_url).then(function(data) {
+function getData(){
+d3.json(url).then(function(data){
+       console.log(data[0].Lat);
+       var Lat = data[0].Lat
+       drawHeatMap(Lat)
+   
             
         });
 
-        // console.log(data[0][10])
-        console.log(data.length)
-        for (let i = 0; i < data.length; i++) {
-            
-            console.log(data[i].City)
-            console.log(url + data[i].City + url_end)
-            var full_url = url + data[i].City + url_end
-            d3.json(full_url).then(function(result) {
-                // console.log(result.features[0].geometry.coordinates);
-                // console.log(typeof(result.features[0].geometry.coordinates));
-                // temp_list = []
-                // temp_list.push(data[i].City, result.features[0].geometry.coordinates[0], result.features[0].geometry.coordinates[1])
-                // temp_list.push(result.features[0].geometry.coordinates[0])
-                // temp_list.push(result.features[0].geometry.coordinates[1])
-                // // console.log(temp_list)
-                main_list.push([data[i].City, result.features[0].geometry.coordinates[0], result.features[0].geometry.coordinates[1]])
-                // console.log(main_list.length)
-                // console.log(main_list[0]) 
-                console.log(main_list.length)
-                // console.log(temp_list.length)
-          });
-        }
-   
 
-
-           // console.log(main_list[0])
-         return main_list; 
-        
-               
-   });
 }
 
-// console.log(main_list) 
+function drawHeatMap(Lat){
+  console.log(`The maps lat is ${Lat}`)
 
-console.log(printName(main_list));
+  var myMap = L.map("map", {
+    center: [33.6868228, -117.7634788],
+    zoom: 13
+  });
+  
+  L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    tileSize: 512,
+    maxZoom: 11,
+    zoomOffset: -1,
+    id: "mapbox/streets-v11",
+    accessToken: API_KEY
+  }).addTo(myMap);
+  
+  // var url = "https://data.sfgov.org/resource/cuks-n6tp.json?$limit=10000";
+  
+  d3.json(url, function(response) {
+  
+    console.log(response);
+    // response.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
+  
+    var heatArray = [];
+  
+    for (var i = 0; i < response.length; i++) {
+      var location = response[i];
+  
+      if (location) {
+        heatArray.push([location.Lat, location.Lng]);
+      }
+    }
+  
+    console.log(`Heat Array: ${heatArray}`)
+    var heat = L.heatLayer(heatArray, {
+      radius: 50,
+      blur: 35
+    }).addTo(myMap);
 
-// console.log(deepCopy)
+  });
+
+}
+
+function drawMarkerMap(){
+
+  var myMap = L.map("map2", {
+    center: [33.6868228, -117.7634788],
+    zoom: 13
+  });
+  
+  L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    tileSize: 512,
+    maxZoom: 11,
+    zoomOffset: -1,
+    id: "mapbox/streets-v11",
+    accessToken: API_KEY
+  }).addTo(myMap);
 
 
-// console.log(main_list.length)
+  
+  d3.json(url, function(response) {
+  for (var i = 0; i < response.length; i++) {
+    var city = response[i].City;
+    var location = response[i];
 
+    L.marker([location.Lat, location.Lng])
+      .bindPopup("<h1>" + city + "</h1>")
+      .addTo(myMap);
+  }
+  });
+}
+
+
+
+getData();
+
+const dataPromise = d3.json(url);
+console.log("Data Promise: ", dataPromise);
 
 
 
