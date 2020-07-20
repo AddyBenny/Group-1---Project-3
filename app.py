@@ -12,7 +12,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Use PyMongo to establish Mongo connection
 #mongo = PyMongo(app, uri="mongodb://localhost:27017/Indeed_db") 
-conn = 'mongodb://localhost:27017'
+conn = 'mongodb://localhost:4545'
 mongo = pymongo.MongoClient(conn)
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -77,4 +77,4 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(debug=True,port=4545)
+    app.run(debug=True, port=5000)
