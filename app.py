@@ -11,7 +11,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Use PyMongo to establish Mongo connection
-#mongo = PyMongo(app, uri="mongodb://localhost:27017/Indeed_db") 
+#mongo = PyMongo(app, uri="mongodb://localhost:27017/Indeed_db")    
 conn = 'mongodb://localhost:27017'
 mongo = pymongo.MongoClient(conn)
 class JSONEncoder(json.JSONEncoder):
@@ -49,9 +49,9 @@ def home():
     docs2 = [json.loads(j_doc, object_hook=json_util.object_hook) for j_doc in json_docs2]
 
     return_ds = JSONEncoder().encode(docs)
-    return_se = JSONEncoder().encode(docs2)
+    # return_se = JSONEncoder().encode(docs2)
     
-    #JSONEncoder().encode(jobs_data)
+    #JSONEncoder().encode(jobs_data)   
 
     return  return_ds
     
