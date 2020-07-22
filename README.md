@@ -3,9 +3,9 @@ Web Scraping &amp; Leaflet
 
 Project Proposal
 
-According to Forbes, Data Science has been rated the #1 job type in the US for 4 years in a row. We decided to search ZipRecruiter and compare other tech jobs to Data Science and see the prominence of each one, and their popular locations.
+According to Forbes, Data Science has been rated the #1 job type in the US for 4 years in a row. We decided to search Indeed and compare other tech jobs to Data Science and see the prominence of each one, and their popular locations.
 
-Our mission is to scrape ZipRecruiter website for the following job titles: 
+Our mission is to scrape Indeed.com website for the following job titles: 
 Data analyst/scientist  
 Software engineer 
 Front end developer 
@@ -14,13 +14,13 @@ Our goal is to compare the number of positions available for each career type an
 
 We will be scraping the following pages:
 
-https://www.ziprecruiter.com/candidate/search?radius=100&search=data+scientist&location=irvine+CA
+https://www.indeed.com/jobs?q=Data+Scientist&l=Irvine%2C+CA&radius=100
 
-https://www.ziprecruiter.com/candidate/search?radius=100&search=software+engineer&location=irvine+CA
+https://www.indeed.com/jobs?q=front+end+developer&l=Irvine%2C+CA&radius=100
 
-https://www.ziprecruiter.com/candidate/search?radius=100&search=front+end+developer&location=irvine+CA
+https://www.indeed.com/jobs?q=Software%20Engineer&l=Irvine%2C%20CA&radius=100
 
-We will using Leaflet to create maps, heat maps and markers. 
+We will be using Leaflet to create maps, heat maps and markers. 
 The first layer will be a heat map indicating hotspots for each of the career types
 The second layer will be a cluster of markers indicating how many jobs are in that area. 
 
